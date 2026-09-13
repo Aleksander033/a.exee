@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading...</title>
+  <style>
+    :root {
+      --bg1: #081427;
+      --bg2: #123257;
+      --card: rgba(5, 12, 20, 0.82);
+      --line: rgba(126, 214, 255, 0.32);
+      --accent: #00e7a7;
+      --accent-2: #45b9ff;
+      --text: #e8f6ff;
+      --muted: #99b3c8;
+      --error: #ff6f6f;
+      --ok: #7ef59f;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, #1d4f83 0%, transparent 50%),
+        radial-gradient(900px 500px at 90% 90%, #0b7f8f 0%, transparent 50%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+    }
+
+    .wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      letter-spacing: 0.4px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .row {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      color: var(--text);
+      padding: 11px 12px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: var(--accent-2);
+      box-shadow: 0 0 0 3px rgba(69, 185, 255, 0.2);
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      color: #00201a;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 11px 14px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+
+    .status {
+      min-height: 22px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .status.ok { color: var(--ok); }
+    .status.error { color: var(--error); }
+
+    .bar {
+      margin-top: 14px;
+      height: 5px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .bar > i {
+      display: block;
+      height: 100%;
+      width: 35%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      animation: move 1.2s linear infinite;
+    }
+
+    @keyframes move {
+      from { transform: translateX(-140%); }
+      to { transform: translateX(380%); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>Checking Key</h1>
+      <p>Enter your key. If valid, you will be redirected to the game.</p>
+
+      <div class="row">
+        <input id="keyInput" type="password" placeholder="Enter your key" autocomplete="off" />
+        <button id="goBtn" type="button">Continue</button>
+      </div>
+
+      <div id="status" class="status"></div>
+      <div class="bar" aria-hidden="true"><i></i></div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var KEY_STORAGE = "ogx_key";
+      var DEVICE_STORAGE = "xprvt_device_id";
+      var SERVER_BASE = "https://xprivt.onrender.com";
+      var VALIDATE_URL = SERVER_BASE + "/validate";
+      var GRANT_URL = SERVER_BASE + "/grant";
+      var nextFromQuery = "";
+      try {
+        var p = new URLSearchParams(window.location.search);
+        nextFromQuery = String(p.get("next") || "").trim();
+      } catch (e) {
+        nextFromQuery = "";
+      }
+      var NEXT_PAGE = nextFromQuery || "./index.html";
+
+      var keyInput = document.getElementById("keyInput");
+      var goBtn = document.getElementById("goBtn");
+      var statusNode = document.getElementById("status");
+
+      function setStatus(message, type) {
+        statusNode.textContent = message || "";
+        statusNode.className = "status" + (type ? " " + type : "");
+      }
+
+      function saveKey(key) {
+        try { localStorage.setItem(KEY_STORAGE, key); } catch (e) {}
+      }
+
+      function setCookie(name, value, maxAgeSec) {
+        try {
+          document.cookie = name + "=" + encodeURIComponent(value) + "; Path=/; Max-Age=" + String(maxAgeSec) + "; SameSite=Lax";
+        } catch (e) {}
+      }
+
+      function getCookie(name) {
+        try {
+          var raw = document.cookie || "";
+          var parts = raw.split(";");
+          for (var i = 0; i < parts.length; i++) {
+            var part = parts[i].trim();
+            if (!part) continue;
+            var eq = part.indexOf("=");
+            if (eq < 0) continue;
+            var k = part.slice(0, eq).trim();
+            if (k !== name) continue;
+            return decodeURIComponent(part.slice(eq + 1));
+          }
+        } catch (e) {}
+        return "";
+      }
+
+      function randomId() {
+        try {
+          var arr = new Uint8Array(16);
+          crypto.getRandomValues(arr);
+          var out = "";
+          for (var i = 0; i < arr.length; i++) out += arr[i].toString(16).padStart(2, "0");
+          return out;
+        } catch (e) {
+          return String(Date.now().toString(16) + Math.random().toString(16).slice(2)).slice(0, 32);
+        }
+      }
+
+      function readCookie(name) {
+        try {
+          var raw = document.cookie || "";
+          var parts = raw.split(";");
+          for (var i = 0; i < parts.length; i++) {
+            var part = parts[i].trim();
+            if (!part) continue;
+            var eq = part.indexOf("=");
+            if (eq < 0) continue;
+            var key = part.slice(0, eq).trim();
+            if (key !== name) continue;
+            return decodeURIComponent(part.slice(eq + 1));
+          }
+        } catch (e) {}
+        return "";
+      }
+
+      function ensureDeviceId() {
+        var id = "";
+        try { id = (localStorage.getItem(DEVICE_STORAGE) || "").trim(); } catch (e) {}
+        if (!id) {
+          id = (readCookie(DEVICE_STORAGE) || "").trim();
+        }
+        if (!id || id.length < 16) {
+          if (window.__ogxDeviceId && String(window.__ogxDeviceId).trim().length >= 16) {
+            id = String(window.__ogxDeviceId).trim();
+          } else {
+            id = randomId();
+          }
+        }
+        try { localStorage.setItem(DEVICE_STORAGE, id); } catch (e) {}
+        try { document.cookie = DEVICE_STORAGE + "=" + encodeURIComponent(id) + "; Path=/; Max-Age=" + String(60 * 60 * 24 * 30) + "; SameSite=Lax"; } catch (e) {}
+        window.__ogxDeviceId = id;
+        return id;
+      }
+
+      function getKey() {
+        var local = "";
+        try { local = (localStorage.getItem(KEY_STORAGE) || "").trim(); } catch (e) {}
+        if (local) return local;
+
+        var cookieKey = (getCookie(KEY_STORAGE) || "").trim();
+        if (cookieKey) return cookieKey;
+
+        var winKey = "";
+        try { winKey = String(window.__ogxKey || "").trim(); } catch (e) {}
+        return winKey;
+      }
+
+      async function validateKey(key, deviceId) {
+        var response = await fetch(VALIDATE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: key, deviceId: deviceId })
+        });
+
+        var json = null;
+        try {
+          json = await response.json();
+        } catch (e) {
+          json = null;
+        }
+
+        if (!response.ok || !json || !json.ok) {
+          var reason = (json && json.error) ? String(json.error) : "validation failed";
+          throw new Error(reason);
+        }
+      }
+
+      async function requestGrant(key, deviceId) {
+        try {
+          await fetch(GRANT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ key: key, deviceId: deviceId })
+          });
+        } catch (e) {
+          // Grant cookies are optional for this loader flow.
+        }
+      }
+
+      async function loadNextPage(nextPage) {
+        var response = await fetch(nextPage, {
+          method: "GET",
+          credentials: "include"
+        });
+
+        if (!response.ok) {
+          throw new Error("could not load game page");
+        }
+
+        var html = await response.text();
+        history.replaceState({}, "", nextPage);
+        document.open();
+        document.write(html);
+        document.close();
+      }
+
+      async function runValidation() {
+        var key = (keyInput.value || "").trim();
+        var deviceId = ensureDeviceId();
+        if (!key) {
+          setStatus("Please enter your key.", "error");
+          return;
+        }
+
+        goBtn.disabled = true;
+        keyInput.disabled = true;
+        setStatus("Validating key with server...", "");
+
+        try {
+          await validateKey(key, deviceId);
+          await requestGrant(key, deviceId);
+          saveKey(key);
+          setCookie(KEY_STORAGE, key, 60 * 60 * 24 * 7);
+          setCookie(DEVICE_STORAGE, deviceId, 60 * 60 * 24 * 30);
+          try { sessionStorage.setItem("loader_ok", "1"); } catch (e) {}
+          setStatus("Key is valid. Loading game...", "ok");
+          await loadNextPage(NEXT_PAGE);
+        } catch (err) {
+          try { sessionStorage.removeItem("loader_ok"); } catch (e) {}
+          var message = (err && err.message) ? err.message : "Could not validate key";
+          setStatus("Access denied: " + message, "error");
+          goBtn.disabled = false;
+          keyInput.disabled = false;
+          keyInput.focus();
+          keyInput.select();
+        }
+      }
+
+      goBtn.addEventListener("click", runValidation);
+      keyInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") runValidation();
+      });
+
+      ensureDeviceId();
+
+      var remembered = getKey();
+      if (remembered) {
+        keyInput.value = remembered;
+        runValidation();
+      } else {
+        keyInput.focus();
+      }
+    })();
+  </script>
+</body>
+</html>

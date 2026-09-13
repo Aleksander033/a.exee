@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function () {
+        // When Tampermonkey injects this document, it keeps senpa.io as the
+        // page origin. The userscript owns access/loading in that mode; never
+        // navigate to the hosted loader from inside the injected document.
+        if (location.hostname === "senpa.io") return;
+        try {
+          if (sessionStorage.getItem("loader_ok") === "1") return;
+        } catch (e) {}
+        function gc(n) {
+          try {
+            var c = document.cookie || "";
+            var a = c.split(";");
+            for (var i = 0; i < a.length; i++) {
+              var p = a[i].trim();
+              if (!p) continue;
+              var j = p.indexOf("=");
+              if (j < 0) continue;
+              var k = p.slice(0, j).trim();
+              if (k !== n) continue;
+              return decodeURIComponent(p.slice(j + 1));
+            }
+          } catch (e) {}
+          return "";
+        }
+        function red() {
+          var n = location.pathname + location.search + location.hash;
+          location.replace("./loader.html?next=" + encodeURIComponent(n));
+        }
+        try {
+          var key = "";
+          try {
+            key = (localStorage.getItem("ogx_key") || "").trim();
+          } catch (e) {}
+          if (!key) key = (gc("ogx_key") || "").trim();
+          if (!key) {
+            red();
+            return;
+          }
+          var deviceId = "";
+          try {
+            deviceId = (localStorage.getItem("xprvt_device_id") || "").trim();
+          } catch (e) {}
+          if (!deviceId) deviceId = (gc("xprvt_device_id") || "").trim();
+          if (!deviceId && window.__ogxDeviceId)
+            deviceId = String(window.__ogxDeviceId).trim();
+          var x = new XMLHttpRequest();
+          x.open("POST", "https://xprivt.onrender.com/validate", false);
+          x.setRequestHeader("Content-Type", "application/json");
+          x.send(JSON.stringify({ key: key, deviceId: deviceId }));
+          var ok = false;
+          try {
+            var r = JSON.parse(x.responseText || "{}");
+            ok = !!(x.status >= 200 && x.status < 300 && r && r.ok);
+          } catch (e) {}
+          if (!ok) {
+            red();
+            return;
+          }
+          try {
+            sessionStorage.setItem("loader_ok", "1");
+          } catch (e) {}
+        } catch (e) {
+          red();
+        }
+      })();
+    </script>
+    <link rel="icon" href="./favicon.png" />
+    <link rel="apple-touch-icon" href="./favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Rajdhani:400,500,600|Rubik|Ubuntu:400,500|Roboto:300,400,500,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.11.1/css/all.css"
+      crossorigin="anonymous"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="keywords"
+      content="Senpa.io,io,elite,elites,elitesio,agar,agario,agar.io,slither,slither.io,Senpa,germ,iogames,io games,.io games,iogames.space,io,elite.io,cell,cells,virus,bacteria,blob,game,games,web game,html5,fun,flash,javascript,mobile,app,android,ios,game,play,store,free,unblocked,battle royale,battle,royale"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="viewport"
+      content="minimal-ui,width=device-width,minimum-scale=1,initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#00ff00" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:type" content="website" />
+    <script>
+      ((window.aiptag = window.aiptag || { cmd: [] }),
+        (aiptag.cmd.display = aiptag.cmd.display || []),
+        (aiptag.cmp = {
+          show: !0,
+          position: "centered",
+          button: !1,
+          buttonText: "Privacy settings",
+          buttonPosition: "bottom-left",
+        }));
+    </script>
+    <link href="./static/css/main.b6296d95.css" rel="stylesheet" />
+    <link href="./static/css/new-ui-v4.css?v=20260819-ui17" rel="stylesheet" />
+    <link href="./static/js/senpa-modern-ui.css?v=20260906-ui8" rel="stylesheet" />
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript
+    ><svg height="0" width="0">
+      <filter id="hue-rotate">
+        <feColorMatrix
+          in="SourceGraphic"
+          id="matrix"
+          type="matrix"
+          color-interpolation-filters="sRGB"
+        />
+      </filter></svg
+    ><canvas id="screen" class="screen"></canvas>
+    <div id="ui-root"></div>
+    <script type="text/javascript">
+      const gameAds = function (e, a, n, t, r, s, o) {
+          ((e[r] =
+            e[r] ||
+            function () {
+              (e[r].s = e[r].s || []).push(arguments);
+            }),
+            (e[r].l = 1 * new Date()),
+            (s = a.createElement("script")),
+            (o = a.getElementsByTagName("script")[0]),
+            (s.async = 1),
+            (s.src =
+              t +
+              "?objid=" +
+              n +
+              "&jsdate=" +
+              +new Date() +
+              "&lang=" +
+              e.navigator.language +
+              "&rfunc=" +
+              r +
+              "&fromhost=" +
+              e.location.hostname +
+              "&refr=" +
+              a.referrer),
+            o.parentNode.insertBefore(s, o));
+        },
+        intVale = setInterval(() => {
+          var e, a, n, t, r, s, o;
+          document.getElementById("gameadsbanner") &&
+            ((e = window),
+            (a = document),
+            (n = "gameadsbanner"),
+            (t = "https://n.gameads.io/getcode"),
+            (e[(r = "GameAdsRenew")] =
+              e[r] ||
+              function () {
+                (e[r].s = e[r].s || []).push(arguments);
+              }),
+            (e[r].l = 1 * new Date()),
+            (s = a.createElement("script")),
+            (o = a.getElementsByTagName("script")[0]),
+            (s.async = 1),
+            (s.src =
+              t +
+              "?objid=" +
+              n +
+              "&jsdate=" +
+              +new Date() +
+              "&lang=" +
+              e.navigator.language +
+              "&rfunc=" +
+              r +
+              "&fromhost=" +
+              e.location.hostname +
+              "&refr=" +
+              a.referrer),
+            o.parentNode.insertBefore(s, o),
+            GameAdsRenew("gameadsbanner"),
+            clearInterval(intVale));
+        }, 1e3);
+    </script>
+    <script>
+      !(function () {
+        const P = (k) => "cell2Nick:" + k;
+        let last = "";
+        const f = () => {
+          const i = document.querySelector("#primary-inputs input#name");
+          if (!i || i.dataset.cell2) return;
+          i.dataset.cell2 = 1;
+          const j = i.cloneNode(!0);
+          j.placeholder = "Cell 2 nickname";
+          j.style.marginLeft = "6px";
+          const norm = (s) => (typeof s === "string" && s.length ? s : "");
+          const apply = () =>
+            queueMicrotask(() => {
+              const a = norm(i.value);
+              if (!a || a === last) return;
+              last = a;
+              const b = norm(localStorage.getItem(P(a)) || a + "-2");
+              j.value = b;
+              window.__connNicks = [a, b];
+            });
+          j.oninput = () => {
+            const a = norm(i.value);
+            const b = norm(j.value);
+            if (!a || !b) return;
+            localStorage.setItem(P(a), b);
+            window.__connNicks = [a, b];
+          };
+          i.parentNode.appendChild(j);
+          setInterval(apply, 150);
+          apply();
+        };
+        new MutationObserver(f).observe(document.body, {
+          childList: !0,
+          subtree: !0,
+        });
+      })();
+    </script>
+    <style>
+      #primary-inputs {
+        display: flex;
+        gap: 6px;
+        overflow: visible;
+      }
+      #primary-inputs input#tag {
+        flex: 0 0 auto;
+      }
+      #primary-inputs input#name,
+      #primary-inputs input[data-cell2] {
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: calc(50% - 3px);
+      }
+    </style>
+    <script>
+      (function () {
+        const KEY_STORAGE = "ogx_key";
+        const DEVICE_STORAGE = "xprvt_device_id";
+        function randomId() {
+          try {
+            const a = new Uint8Array(16);
+            crypto.getRandomValues(a);
+            return Array.from(a, (b) => b.toString(16).padStart(2, "0")).join(
+              "",
+            );
+          } catch {
+            return (
+              Math.random().toString(16).slice(2) +
+              Math.random().toString(16).slice(2)
+            );
+          }
+        }
+        function ensureDeviceId() {
+          let id = "";
+          try {
+            id = localStorage.getItem(DEVICE_STORAGE) || "";
+          } catch {}
+          if (!id) {
+            id = randomId();
+            try {
+              localStorage.setItem(DEVICE_STORAGE, id);
+            } catch {}
+          }
+          window.__ogxDeviceId = id;
+          return id;
+        }
+        function getKey() {
+          try {
+            return localStorage.getItem(KEY_STORAGE) || "";
+          } catch {
+            return "";
+          }
+        }
+        function setKey(key) {
+          try {
+            localStorage.setItem(KEY_STORAGE, key);
+          } catch {}
+          window.__ogxKey = key;
+        }
+        ensureDeviceId();
+        const savedKey = getKey();
+        if (savedKey) {
+          setKey(savedKey);
+        }
+        function mount() {
+          const wrap = document.createElement("div");
+          wrap.id = "xprivt-key-mini";
+          wrap.style.cssText =
+            "position:fixed;left:10px;top:10px;z-index:2147483647;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:6px 8px;font-family:Rajdhani,Arial,sans-serif;font-size:12px;color:#fff;display:flex;gap:6px;align-items:center;";
+          wrap.innerHTML =
+            '<span style="opacity:.8">Key</span><input id="xprivt-key-input" type="password" placeholder="Enter" style="width:120px;padding:4px 6px;border-radius:4px;border:1px solid #333;background:#0f0f0f;color:#fff;outline:none"/><button id="xprivt-key-save" style="padding:4px 6px;border-radius:4px;border:1px solid #2f5e9c;background:#3362a3;color:#fff;cursor:pointer;font-size:12px">Save</button>';
+          document.body.appendChild(wrap);
+          const input = wrap.querySelector("#xprivt-key-input");
+          const btn = wrap.querySelector("#xprivt-key-save");
+          if (savedKey) {
+            input.value = savedKey;
+            wrap.style.display = "none";
+          }
+          const save = () => {
+            const val = (input.value || "").trim();
+            if (!val) return;
+            setKey(val);
+            wrap.style.display = "none";
+            if (window.__reconnectSkinSync) window.__reconnectSkinSync();
+          };
+          btn.addEventListener("click", save);
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") save();
+          });
+        }
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", mount);
+        } else {
+          mount();
+        }
+      })();
+    </script>
+    <script defer src="./senpa-api-compat.js?v=20260804-auth16"></script>
+    <script defer src="./static/js/main.8569eac9.js?v=20260910-auth20"></script>
+    <script defer src="./build/vendors.js"></script>
+    <script defer src="./build/senpaobs1_smooth.js?v=20260829-chat1"></script>
+    <script defer src="./static/js/senpa-modern-ui.js?v=20260906-ui8"></script>
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
+      integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
+      data-cf-beacon='{"version":"2024.11.0","token":"497d356960844ff98050f21b0ff8af7d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Asset test</title>
+<pre id="out">checking...</pre>
+<script>
+  const files = [
+    "./index.html",
+    "./loader.html",
+    "./senpa-api-compat.js",
+    "./static/css/main.b6296d95.css",
+    "./static/css/new-ui-v4.css",
+    "./static/js/senpa-modern-ui.css",
+    "./static/js/main.8569eac9.js",
+    "./static/js/senpa-modern-ui.js",
+    "./build/vendors.js",
+    "./build/senpaobs1_smooth.js",
+    "./build/bundle.wasm",
+    "./build/bitmapFonts/ubuntuBold.fnt",
+    "./build/bitmapFonts/ubuntuBold_0.png",
+    "./build/bitmapFonts/ubuntuBoldStroked.fnt",
+    "./build/bitmapFonts/ubuntuBoldStroked_0.png",
+    "./build/resources/img/rainbow.png",
+    "./build/resources/img/shield.png",
+    "./img/logo-med.png",
+    "./img/food-bg.png",
+    "./img/no-skin.png",
+    "./img/discord.svg",
+    "./img/facebook.png",
+    "./img/forum.png",
+    "./img/hiddenx.png",
+    "./img/twitter.png",
+    "./img/youtube.png",
+    "./favicon.png",
+    "./img/avatar.png",
+    "./img/coins.png",
+    "./img/xp.png"
+  ];
+  (async () => {
+    const rows = [];
+    for (const f of files) {
+      const r = await fetch(f, { cache: "no-store" });
+      const buf = await r.arrayBuffer();
+      const n = buf.byteLength;
+      const u8 = new Uint8Array(buf);
+      const head = new TextDecoder().decode(u8.slice(0, 40));
+      const looks404 = n < 200 && /404|NOT_FOUND/i.test(head);
+      rows.push({ f, status: r.status, bytes: n, ok: r.ok && !looks404, looks404 });
+    }
+    const missing = rows.filter((x) => !x.ok);
+    document.getElementById("out").textContent =
+      "missing=" + missing.length + "\n" + JSON.stringify({ missing, rows }, null, 2);
+  })();
+</script>

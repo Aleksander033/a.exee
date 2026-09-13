@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<font>
+  <info face="Ubuntu" size="200" bold="1" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
+  <common lineHeight="199" base="161" scaleW="512" scaleH="512" pages="1" packed="0" alphaChnl="1" redChnl="0" greenChnl="0" blueChnl="0"/>
+  <pages>
+    <page id="0" file="ubuntuBold_0.png" />
+  </pages>
+  <chars count="12">
+    <char id="46" x="395" y="120" width="33" height="31" xoffset="4" yoffset="132" xadvance="41" page="0" chnl="15" />
+    <char id="48" x="168" y="0" width="85" height="120" xoffset="5" yoffset="43" xadvance="95" page="0" chnl="15" />
+    <char id="49" x="337" y="121" width="57" height="116" xoffset="11" yoffset="45" xadvance="95" page="0" chnl="15" />
+    <char id="50" x="81" y="131" width="82" height="118" xoffset="5" yoffset="43" xadvance="95" page="0" chnl="15" />
+    <char id="51" x="86" y="0" width="81" height="121" xoffset="4" yoffset="43" xadvance="95" page="0" chnl="15" />
+    <char id="52" x="164" y="122" width="88" height="116" xoffset="3" yoffset="45" xadvance="95" page="0" chnl="15" />
+    <char id="53" x="0" y="131" width="80" height="119" xoffset="6" yoffset="45" xadvance="95" page="0" chnl="15" />
+    <char id="54" x="338" y="0" width="85" height="119" xoffset="5" yoffset="44" xadvance="95" page="0" chnl="15" />
+    <char id="55" x="253" y="121" width="83" height="116" xoffset="6" yoffset="45" xadvance="95" page="0" chnl="15" />
+    <char id="56" x="254" y="0" width="83" height="120" xoffset="6" yoffset="43" xadvance="95" page="0" chnl="15" />
+    <char id="57" x="424" y="0" width="85" height="119" xoffset="4" yoffset="42" xadvance="95" page="0" chnl="15" />
+    <char id="107" x="0" y="0" width="85" height="130" xoffset="11" yoffset="31" xadvance="97" page="0" chnl="15" />
+  </chars>
+</font>

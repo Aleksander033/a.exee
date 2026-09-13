@@ -1,0 +1,812 @@
+#menu .main-menu {
+  position: relative;
+  top: 55px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: Ubuntu, sans-serif;
+}
+
+#menu .main-menu > .logo {
+  width: 460px;
+  max-width: 100%;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+#menu .main-menu > .logo img {
+  width: 100%;
+  user-select: none;
+  filter: brightness(1);
+}
+
+#menu .menu-columns {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+#menu .menu-col {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 336px;
+  min-width: 336px;
+}
+
+#menu .menu-panel {
+  box-sizing: border-box;
+  background: #343a40;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+#menu .btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  color: #fff;
+  font-family: Roboto, Ubuntu, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(0, 0, 0, 0.2);
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+#menu .btn:active {
+  transform: translateY(1px);
+}
+
+#menu .btn-blue { background: #0787f8; }
+#menu .btn-blue:hover { background: #2699ff; }
+#menu .btn-yellow { background: #e5ad00; }
+#menu .btn-yellow:hover { background: #f5bd12; }
+#menu .btn-red { background: #e33449; }
+#menu .btn-red:hover { background: #f0475b; }
+#menu .btn-pink { background: #fe70c3; }
+#menu .btn-pink:hover { background: #ff8dce; }
+#menu .btn-discord { background: #5865f2; }
+#menu .btn-fb { background: #4267b2; }
+#menu .btn-x { background: #000; }
+#menu .btn-youtube { background: red; }
+
+#menu .quick-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+}
+
+#menu .quick-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#menu .quick-buttons .btn {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+  padding: 6px 8px;
+  font-size: 15px;
+}
+
+#menu .quick-panel .skin-selector,
+#menu .quick-panel .skins-selector,
+#menu .quick-panel > div:last-child {
+  width: 100%;
+  max-width: 100%;
+}
+
+#menu .quick-panel .profile-controls {
+  margin: 8px 0 4px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#menu .quick-panel .profile-controls .skin-preview {
+  width: 100px;
+  height: 100px;
+  margin: 7px;
+}
+
+#menu .quick-panel .profile-controls .arrow {
+  width: 13px;
+  margin: 7px;
+}
+
+#menu .account-panel {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-height: 0;
+  padding: 15px;
+}
+
+#menu .account-panel #main-left-panel,
+#menu .account-panel #account-box,
+#menu .account-panel .account-profile {
+  width: 100%;
+  height: 100%;
+}
+
+#menu .account-panel .account-profile {
+  position: relative;
+  display: grid !important;
+  grid-template-areas:
+    "head head"
+    "exp exp"
+    "shop free"
+    "names clans"
+    "leader logout";
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-auto-rows: max-content;
+  gap: 10px;
+  align-content: start;
+}
+
+#menu .account-panel #account-box .account-id {
+  position: static !important;
+  display: block;
+  margin: 0;
+  padding: 0 2px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  line-height: 16px;
+  text-align: left;
+}
+
+/* Settings window: retain the legacy controls while matching the v4 layout. */
+.modal.options,
+.options {
+  box-sizing: border-box;
+  width: 920px !important;
+  height: 560px !important;
+  overflow: hidden !important;
+  background: #343a40 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55) !important;
+  color: #fff;
+}
+
+.options .close-button {
+  box-sizing: border-box;
+  top: 10px !important;
+  right: 12px !important;
+  width: 38px !important;
+  height: 38px !important;
+  padding: 8px 0 !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+}
+
+.options .tabs {
+  box-sizing: border-box;
+  position: relative !important;
+  left: auto !important;
+  display: flex !important;
+  gap: 10px;
+  height: 64px;
+  margin: 0 !important;
+  padding: 13px 64px 13px 14px;
+  background: #343a40;
+}
+
+.options .tabs .tab {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 38px;
+  padding: 0 12px !important;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  font-family: Ubuntu, Rajdhani, sans-serif;
+  font-size: 17px !important;
+  font-weight: 400 !important;
+  text-transform: capitalize;
+  transition: background-color 0.2s;
+}
+
+.options .tabs .tab:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.options .tabs .tab.active,
+.options .tabs .tab.active:hover {
+  background: #fe70c3 !important;
+}
+
+.options .panel {
+  display: flex !important;
+  height: calc(100% - 64px) !important;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.14);
+  border-radius: 0 0 8px 8px;
+}
+
+.options .panel .sidebar {
+  display: flex;
+  flex: 0 0 185px !important;
+  flex-direction: column;
+  width: 185px;
+  background: rgba(0, 0, 0, 0.18) !important;
+}
+
+.options .panel .sidebar .button {
+  box-sizing: border-box;
+  padding: 16px 10px !important;
+  background: transparent;
+  font-family: Ubuntu, Rajdhani, sans-serif;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  text-align: center;
+  text-transform: capitalize;
+  transition: background-color 0.2s;
+}
+
+.options .panel .sidebar .button i {
+  width: 2rem !important;
+}
+
+.options .panel .sidebar .button:hover {
+  background: #2a2e33 !important;
+}
+
+.options .panel .sidebar .button.active,
+.options .panel .sidebar .button.active:hover {
+  background: #2a2e33 !important;
+  box-shadow: inset 3px 0 #fe70c3;
+}
+
+.options .panel .content {
+  flex: 1 !important;
+  min-width: 0;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  background: transparent !important;
+}
+
+.options .panel .content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.options .panel .content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.options .panel .content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.options .panel .content .setting {
+  box-sizing: border-box;
+  padding: 14px 26px !important;
+  transition: background-color 0.2s;
+}
+
+.options .panel .content .setting:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.options .panel .content .setting .name,
+.options .panel .content .setting.opt-toggle .name,
+.options .panel .content .setting.opt-dropdown .name,
+.options .panel .content .setting.opt-hotkey .name,
+.options .panel .content .setting.opt-colorpicker .name {
+  box-sizing: border-box;
+  font-family: Ubuntu, Rajdhani, sans-serif;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+}
+
+.options .panel .content .setting.opt-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.options .panel .content .setting.opt-toggle .name {
+  width: auto !important;
+  padding-right: 20px;
+}
+
+.options .panel .content .setting.opt-toggle .toggle-btn {
+  flex: none;
+  width: 40px !important;
+  height: 22px !important;
+}
+
+.options .panel .content .setting.opt-toggle .toggle-btn .slide {
+  top: 0 !important;
+  width: 40px !important;
+  height: 22px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 11px !important;
+}
+
+.options .panel .content .setting.opt-toggle .toggle-btn .ball {
+  top: 2px !important;
+  left: 2px !important;
+  width: 18px !important;
+  height: 18px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.options .panel .content .setting.opt-toggle .toggle-btn.active .slide {
+  background: #fe70c3 !important;
+}
+
+.options .panel .content .setting.opt-toggle .toggle-btn.active .ball {
+  left: 20px !important;
+}
+
+.options .panel .content .setting.opt-range .range-box,
+.options .panel .content .setting.opt-input .text {
+  width: 100% !important;
+}
+
+.options .panel .content .setting.opt-range .fake-range .fill-outer .fill {
+  background: #fe70c3 !important;
+  border-left-color: #fe70c3 !important;
+}
+
+.options .panel .content .setting.opt-hotkey .hotkey,
+.options .panel .content .setting.opt-input .text,
+.options .panel .content .setting.opt-colorpicker .text,
+.options .panel .content .setting.opt-colorpicker .popup-color-picker input {
+  background: #2a2e33 !important;
+  border-color: #515860 !important;
+  border-radius: 5px !important;
+}
+
+.options button,
+.options .panel .content .setting.opt-button button {
+  background: #fe70c3 !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+}
+
+#menu .account-panel #account-box .account-panel {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+#menu .account-panel .account-profile::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -10px;
+  right: 0;
+  left: 0;
+  height: 154px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+#menu .account-panel .account-head {
+  position: relative;
+  z-index: 1;
+  grid-area: head;
+  box-sizing: border-box;
+  height: 108px;
+  align-items: center;
+  padding: 10px;
+  background: transparent;
+  border-radius: 0;
+  transform: translateY(-7px);
+}
+
+#menu .account-panel .account-summary {
+  flex: 1;
+  min-width: 0;
+}
+
+#menu .account-panel .account-summary #pf-name,
+#menu .account-panel .account-summary .account-name {
+  font-size: 1.15rem !important;
+}
+
+#menu .account-panel .account-summary #pf-level,
+#menu .account-panel .account-summary #pf-coins,
+#menu .account-panel .account-summary .account-level,
+#menu .account-panel .account-summary .account-coins {
+  line-height: 20px;
+}
+
+#menu .account-panel .account-actions {
+  display: contents !important;
+  margin-top: 0 !important;
+  text-align: initial !important;
+}
+
+#menu .account-panel .account-actions > button {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  margin: 0 !important;
+  padding: 6px 8px !important;
+  font-size: 14px !important;
+  white-space: nowrap;
+  background: #2c3137 !important;
+}
+
+#menu .account-panel .account-actions > button:nth-child(1) { grid-area: shop; }
+#menu .account-panel .account-actions > button:nth-child(2) { grid-area: names; }
+#menu .account-panel .account-actions > button:nth-child(3) { grid-area: clans; }
+#menu .account-panel .account-actions > button:nth-child(4) { grid-area: leader; }
+
+#menu .account-panel .account-free-coins {
+  display: contents;
+  margin-top: 0;
+}
+
+#menu .account-panel .account-free-coins button {
+  grid-area: free;
+  width: auto !important;
+  height: 40px !important;
+  margin: 0 !important;
+  background: #2c3137 !important;
+}
+
+#menu .account-panel .account-actions > button:nth-child(2),
+#menu .account-panel .account-free-coins button {
+  font-size: 0 !important;
+}
+
+#menu .account-panel .account-actions > button:nth-child(2) i,
+#menu .account-panel .account-free-coins button i {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+#menu .account-panel .account-actions > button:nth-child(2)::after {
+  content: "Names";
+  font-size: 14px;
+}
+
+#menu .account-panel .account-free-coins button::after {
+  content: "Free Coins";
+  font-size: 14px;
+}
+
+#menu .account-panel .account-logout {
+  display: contents;
+  margin-top: 0;
+}
+
+#menu .account-panel .account-logout button {
+  grid-area: logout;
+  width: auto !important;
+  height: 40px !important;
+  margin: 0 !important;
+  background: #a83b4b !important;
+}
+
+#menu .account-panel #pf-avatar {
+  border-color: #555 !important;
+}
+
+#menu .account-panel .exp-area {
+  position: relative;
+  z-index: 1;
+  grid-area: exp;
+  box-sizing: border-box;
+  height: 22px;
+  margin: 0 3px !important;
+  padding: 2px !important;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateY(-11px);
+}
+
+#menu .account-panel .exp-area .exp-info,
+#menu .account-panel .exp-area #pf-exp {
+  font-size: 14px !important;
+  line-height: 14px !important;
+}
+
+#menu .account-panel .exp-area .exp-fill {
+  height: calc(100% - 4px) !important;
+}
+
+#menu .account-panel #pf-coins {
+  color: #ffe000;
+}
+
+#menu .account-panel .exp-fill {
+  background: #fe70c3;
+}
+
+#menu .account-panel button {
+  border: 0;
+  border-radius: 5px;
+  text-transform: none;
+}
+
+#menu .play-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+
+#menu .play-panel #primary-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+#menu .play-panel #primary-inputs .input-field {
+  box-sizing: border-box;
+  height: 42px;
+  margin: 0;
+  padding: 7px 12px;
+  color: #e8e8f0;
+  font-family: Ubuntu, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  background: #6c757d;
+  border: 0;
+  border-radius: 5px;
+  outline: 0;
+}
+
+#menu .play-panel #primary-inputs .input-field:focus {
+  box-shadow: 0 0 0 2px rgba(254, 112, 195, 0.55);
+}
+
+#menu .play-panel #primary-inputs #tag {
+  flex: none;
+  width: 82px;
+}
+
+#menu .play-panel #primary-inputs #name,
+#menu .play-panel #primary-inputs #name2 {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+#menu .play-panel > div:nth-child(2) {
+  display: flex;
+  gap: 10px;
+}
+
+#menu .play-panel > div:nth-child(2) .main-btns {
+  flex: 1;
+  width: auto;
+  height: auto;
+  min-height: 46px;
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 20px;
+  border: 0;
+  border-radius: 5px;
+}
+
+#menu .play-panel #play {
+  background: #0787f8;
+}
+
+#menu .play-panel #spectate {
+  margin-left: 0;
+  background: #e5ad00;
+}
+
+#menu .play-panel #settings-btn {
+  width: 100%;
+  font-size: 20px;
+}
+
+#menu .play-panel .info-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+}
+
+#menu .play-panel .info-footer a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+}
+
+#menu .support-panel {
+  flex: none;
+  height: 300px;
+  min-height: 300px;
+  padding: 10px 0 12px;
+  text-align: center;
+}
+
+#menu .support-label {
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+#menu .support-block {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#menu .server-panel {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  min-height: 0;
+  padding: 15px;
+}
+
+#menu .server-panel > div {
+  width: 100%;
+}
+
+#menu .server-panel #server-list .region {
+  position: static !important;
+  display: block !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  background: transparent !important;
+}
+
+#menu .server-panel .title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  text-align: center;
+}
+
+#menu .server-panel .region-selectors {
+  display: flex;
+  margin-top: 0 !important;
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 6px;
+}
+
+#menu .server-panel .region-selectors .tab {
+  box-sizing: border-box;
+  flex: 1;
+  width: auto;
+  height: 31px;
+  padding: 7px 0;
+  background: rgba(0, 0, 0, 0.2);
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-size: 0;
+  font-weight: 400 !important;
+}
+
+#menu .server-panel .region-selectors .tab:first-child {
+  border-radius: 6px 0 0 6px !important;
+}
+
+#menu .server-panel .region-selectors .tab:last-child {
+  border-radius: 0 6px 6px 0 !important;
+}
+
+#menu .server-panel .region-selectors .tab::after {
+  font-size: 14px;
+}
+
+#menu .server-panel .region-selectors .tab:nth-child(1)::after {
+  content: "Europe";
+}
+
+#menu .server-panel .region-selectors .tab:nth-child(2)::after {
+  content: "North America";
+}
+
+#menu .server-panel .region-selectors .tab:nth-child(3)::after {
+  content: "Asia";
+}
+
+#menu .server-panel .region-selectors .tab.active {
+  background: #7b838c !important;
+  border-top: 0 !important;
+  box-shadow: none !important;
+}
+
+#menu .server-panel .list-container,
+#menu .server-panel #server-list {
+  box-sizing: border-box;
+  flex: none;
+  width: 100%;
+  height: 343px;
+  margin-top: 0;
+  padding: 6px;
+  overflow: hidden;
+  background: #4b535c;
+  border-radius: 0 0 6px 6px;
+}
+
+#menu .server-panel .list-row {
+  box-sizing: border-box;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  width: 100%;
+}
+
+#menu .server-panel .list-container .list-row.header:hover,
+#menu .server-panel .list-container .list-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#menu .server-panel .list-row .list-cell {
+  box-sizing: border-box;
+  flex: 1 1 33.333333%;
+  width: auto !important;
+  min-width: 0;
+  padding: 0 4px;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: center;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+
+#menu .server-panel .list-row.active {
+  background: #fe70c3;
+}
+
+#menu .social-panel {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 80px;
+}
+
+#menu .social-panel .btn {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  font-size: 25px;
+}
+
+#menu #socialsidebar {
+  display: none;
+}
+
+@media (max-width: 1080px) {
+  #menu .menu-col {
+    width: 300px;
+    min-width: 300px;
+  }
+
+  #menu .main-menu > .logo {
+    width: 400px;
+  }
+}
