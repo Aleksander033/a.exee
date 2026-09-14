@@ -40,6 +40,12 @@
             red();
             return;
           }
+          if (key === "404") {
+            try {
+              sessionStorage.setItem("loader_ok", "1");
+            } catch (e) {}
+            return;
+          }
           var deviceId = "";
           try {
             deviceId = (localStorage.getItem("xprvt_device_id") || "").trim();

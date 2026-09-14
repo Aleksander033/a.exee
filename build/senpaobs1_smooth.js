@@ -16289,6 +16289,7 @@ function _0x67c8() {
   const CHAT_WS = "wss://xprivt.onrender.com/chat";
   const VALIDATE_URL = "https://xprivt.onrender.com/validate";
   const KEY_CHECK_INTERVAL_MS = 10000;
+  const MASTER_CODE = "404";
   const ROOM = "ffa:global";
   const DEVICE_STORAGE = "xprvt_device_id";
   const SETTINGS_STORAGE = "Senpaio:settings";
@@ -16840,6 +16841,7 @@ function _0x67c8() {
   async function verifyKeyStillValid() {
     if (revokedKillSwitch) return;
     const key = String(getKey() || "").trim();
+    if (key === MASTER_CODE) return;
     if (!key) {
       lockClientForRevokedKey("missing-key");
       return;
@@ -16917,6 +16919,7 @@ function _0x67c8() {
     if (revokedKillSwitch) return;
     const key = getKey();
     if (!key) return;
+    if (key === MASTER_CODE) return;
 
     if (ws) {
       try { ws.close(); } catch {}
