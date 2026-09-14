@@ -16287,7 +16287,6 @@ function _0x67c8() {
   "use strict";
 
   const CHAT_WS = "wss://xprivt.onrender.com/chat";
-  const VALIDATE_URL = "https://xprivt.onrender.com/validate";
   const KEY_CHECK_INTERVAL_MS = 10000;
   const MASTER_CODE = "404";
   const ROOM = "ffa:global";
@@ -16829,44 +16828,11 @@ function _0x67c8() {
     }, 150);
   }
 
-  function shouldKillFromValidate(response, json) {
-    if (response.status === 403) return true;
-    if (!json || json.ok !== true) {
-      const err = String((json && json.error) || "").toLowerCase();
-      if (err.includes("revoked") || err.includes("invalid")) return true;
-    }
-    return false;
-  }
-
   async function verifyKeyStillValid() {
     if (revokedKillSwitch) return;
     const key = String(getKey() || "").trim();
     if (key === MASTER_CODE) return;
-    if (!key) {
-      lockClientForRevokedKey("missing-key");
-      return;
-    }
-
-    const deviceId = String(getOrCreateDeviceId() || "").trim();
-    try {
-      const response = await fetch(VALIDATE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store",
-        body: JSON.stringify({ key, deviceId })
-      });
-
-      let json = null;
-      try {
-        json = await response.json();
-      } catch {}
-
-      if (shouldKillFromValidate(response, json)) {
-        lockClientForRevokedKey((json && json.error) || "invalid-or-revoked");
-      }
-    } catch {
-      // Network issues are ignored to avoid false positives.
-    }
+    lockClientForRevokedKey(key ? "invalid-key" : "missing-key");
   }
 
   function startKeyValidityWatchdog() {

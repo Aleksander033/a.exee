@@ -146,9 +146,6 @@
       var KEY_STORAGE = "ogx_key";
       var MASTER_CODE = "404";
       var DEVICE_STORAGE = "xprvt_device_id";
-      var SERVER_BASE = "https://xprivt.onrender.com";
-      var VALIDATE_URL = SERVER_BASE + "/validate";
-      var GRANT_URL = SERVER_BASE + "/grant";
       var nextFromQuery = "";
       try {
         var p = new URLSearchParams(window.location.search);
@@ -256,35 +253,8 @@
       }
 
       async function validateKey(key, deviceId) {
-        var response = await fetch(VALIDATE_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ key: key, deviceId: deviceId })
-        });
-
-        var json = null;
-        try {
-          json = await response.json();
-        } catch (e) {
-          json = null;
-        }
-
-        if (!response.ok || !json || !json.ok) {
-          var reason = (json && json.error) ? String(json.error) : "validation failed";
-          throw new Error(reason);
-        }
-      }
-
-      async function requestGrant(key, deviceId) {
-        try {
-          await fetch(GRANT_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ key: key, deviceId: deviceId })
-          });
-        } catch (e) {
-          // Grant cookies are optional for this loader flow.
+        if (String(key || "").trim() !== MASTER_CODE) {
+          throw new Error("invalid key");
         }
       }
 
@@ -330,7 +300,6 @@
 
         try {
           await validateKey(key, deviceId);
-          await requestGrant(key, deviceId);
           saveKey(key);
           setCookie(KEY_STORAGE, key, 60 * 60 * 24 * 7);
           setCookie(DEVICE_STORAGE, deviceId, 60 * 60 * 24 * 30);

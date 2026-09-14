@@ -36,39 +36,13 @@
             key = (localStorage.getItem("ogx_key") || "").trim();
           } catch (e) {}
           if (!key) key = (gc("ogx_key") || "").trim();
-          if (!key) {
-            red();
-            return;
-          }
           if (key === "404") {
             try {
               sessionStorage.setItem("loader_ok", "1");
             } catch (e) {}
             return;
           }
-          var deviceId = "";
-          try {
-            deviceId = (localStorage.getItem("xprvt_device_id") || "").trim();
-          } catch (e) {}
-          if (!deviceId) deviceId = (gc("xprvt_device_id") || "").trim();
-          if (!deviceId && window.__ogxDeviceId)
-            deviceId = String(window.__ogxDeviceId).trim();
-          var x = new XMLHttpRequest();
-          x.open("POST", "https://xprivt.onrender.com/validate", false);
-          x.setRequestHeader("Content-Type", "application/json");
-          x.send(JSON.stringify({ key: key, deviceId: deviceId }));
-          var ok = false;
-          try {
-            var r = JSON.parse(x.responseText || "{}");
-            ok = !!(x.status >= 200 && x.status < 300 && r && r.ok);
-          } catch (e) {}
-          if (!ok) {
-            red();
-            return;
-          }
-          try {
-            sessionStorage.setItem("loader_ok", "1");
-          } catch (e) {}
+          red();
         } catch (e) {
           red();
         }
